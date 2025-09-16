@@ -1,91 +1,58 @@
-import { NavLink } from "react-router-dom";
+import { IoIosSearch } from "react-icons/io";
+import { NavLink, useLocation } from "react-router-dom";
+import avatar from "../../assets/images/avatar.png";
+import { FaCaretDown } from "react-icons/fa6";
+import { routes } from "../../router/routes";
+import type { RoutesElementsI, RoutesI } from "../../router/type";
 
 const Header = () => {
+  const { pathname } = useLocation();
+  const MainPath = pathname.split("/")[1] || "";
+  const links = routes?.find((el: RoutesI) => el?.path === MainPath);
+
   return (
-    <nav className="flex flex-row w-full items-center justify-between  py-5 border-b border-pink-bg">
-      {/* <div className="bg-red-500 w-[60%]">s</div>
-      <div className="bg-green-400 w-[40%]">s</div> */}
+    <nav className="flex flex-row w-full px-3 items-center justify-between  py-5">
       <div className="flex items-center gap-8">
-        <NavLink to="#" className="text-pink-500  font-medium">
-          Dashboard
-        </NavLink>
-        <NavLink to="#" className="text-gray-600 hover:text-gray-900">
-          Pools
-        </NavLink>
-        <NavLink to="#" className="text-gray-600 hover:text-gray-900 relative">
-          Tokens
-          <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-            3
-          </span>
-        </NavLink>
-        <NavLink to="#" className="text-gray-600 hover:text-gray-900">
-          Market
-        </NavLink>
-        <NavLink to="#" className="text-gray-600 hover:text-gray-900">
-          NFT
-        </NavLink>
+        {links?.children?.map((el: RoutesElementsI) => {
+          const isActive = pathname === el?.path;
+          return (
+            <div className="relative group">
+              <NavLink
+                to={el?.path}
+                className={`${
+                  isActive ? "text-links-acitve" : "text-black"
+                } font-medium relative hover:text-links-acitve`}>
+                {el?.title}
+                <span
+                  className={`absolute left-0 -bottom-[18px] h-1 rounded-tr-full rounded-tl-full bg-links-acitve transition-all duration-300 ${
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                />
+              </NavLink>
+            </div>
+          );
+        })}
       </div>
 
-      {/* <div className="flex items-center space-x-4">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search pools or tokens"
-            className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg bg-gray-50 w-64"
-          />
-          <svg
-            className="absolute left-3 top-2.5 w-5 h-5 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-          </svg>
+      <div className="flex flex-row items-center gap-3">
+        <div>
+          <div className="h-full py-3 px-6 w-[300px] bg-white rounded-full flex flex-row items-center gap-4">
+            <IoIosSearch className="text-icon-bg text-2xl font-bold" />
+            <input
+              type="text"
+              placeholder="Search pools or tokens"
+              className="h-full w-full border-none outline-none"
+            />
+          </div>
         </div>
-        <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center"></div>
-        <svg
-          className="w-5 h-5 text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </div> */}
+        <div className="flex items-center gap-3">
+          <img src={avatar} className="size-[45px] rounded-full" />
+          <div className="h-7 w-7 rounded-full flex items-center justify-center bg-hover-pink">
+            <FaCaretDown className="text-icon-bg" />
+          </div>
+        </div>
+      </div>
     </nav>
-    // <nav className="flex items-center justify-between px-8 py-4 bg-white border-b border-pink-200">
-    //   <div className="flex items-center space-x-8">
-    //     <div className="flex space-x-6">
-    //       <a
-    //         href="#"
-    //         className="text-pink-500 border-b-2 border-pink-500 pb-1 font-medium">
-    //         Dashboard
-    //       </a>
-    //       <a href="#" className="text-gray-600 hover:text-gray-900">
-    //         Pools
-    //       </a>
-    //       <a href="#" className="text-gray-600 hover:text-gray-900 relative">
-    //         Tokens
-    //         <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-    //           3
-    //         </span>
-    //       </a>
-    //       <a href="#" className="text-gray-600 hover:text-gray-900">
-    //         Market
-    //       </a>
-    //       <a href="#" className="text-gray-600 hover:text-gray-900">
-    //         NFT
-    //       </a>
-    //     </div>
-    //   </div>
-
-    // // </nav>
   );
 };
 
