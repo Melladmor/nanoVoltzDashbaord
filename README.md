@@ -1,69 +1,70 @@
-# React + TypeScript + Vite
+## Project Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern interactive dashboard built with **React + Vite** for fast and lightweight data visualization.  
+The project provides a **customizable Dashboard** for displaying statistics, charts, and reports in a clean and scalable way.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- High performance powered by Vite
+- Reusable and modular components
+- Ready for charts and analytics integration
+- Fully responsive design across all devices
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- React
+- Vite
+- Yarn
+- Typescript
+- Tailwind
+- Rechart
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+To use the project, follow these instructions:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Clone the repo
+
+   ```sh
+   git clone https://github.com/Melladmor/nanoVoltzDashbaord.git
+   ```
+
+2. Navigate into the project directory and install the dependencies using Yarn:
+
+   ```sh
+   cd nanoVoltzDashbaord
+   ```
+
+   ```sh
+   yarn install
+   ```
+
+3. Run the React Application
+   ```sh
+   yarn dev
+   ```
+
+The app will run by default on: [http://localhost:5173](http://localhost:5173)
+
+---
+
+## Demo
+
+<a href="https://smartcube-task.netlify.app/" target="_blank">Demo</a>
+
+---
+
+## Author
+
+- Mellad Morshed
+- <a href="https://melladmorshed.netlify.app/" target="_blank">Portfolio</a>
+
+---
+
+
