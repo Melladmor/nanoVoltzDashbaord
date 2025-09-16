@@ -9,6 +9,7 @@ import {
   MdLocalPrintshop,
   MdModeEditOutline,
 } from "react-icons/md";
+import type { RowEditHandler, RowSelectHandler } from "./type";
 
 /* ================== Types (داخل الملف) ================== */
 export type ColumnType = "text" | "multiline" | "status";
@@ -63,7 +64,7 @@ const DataTable = <T extends object>({
     onRowSelect?.(newSelected);
   };
 
-  const handleRowSelect = (index: number, checked: boolean): void => {
+  const handleRowSelect: RowSelectHandler = (index, checked) => {
     const newSelected = new Set(selectedRows);
     const actualIndex = startIndex + index;
     checked ? newSelected.add(actualIndex) : newSelected.delete(actualIndex);
@@ -74,7 +75,7 @@ const DataTable = <T extends object>({
     onRowSelect?.(newSelected);
   };
 
-  const handleEdit = (rowData: T, index: number): void => {
+  const handleEdit: RowEditHandler<T> = (rowData, index): void => {
     onRowEdit?.(rowData, startIndex + index);
   };
 

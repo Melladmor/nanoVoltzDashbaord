@@ -13,7 +13,7 @@ import StatsWidget from "../../components/Widget/StatsWidget";
 import type { StatsWidgetT, WidgetI } from "../../components/Widget/type";
 import { useHorizontalWheelScroll } from "../../hooks/useWheelHorizontalScroll";
 import DataTable from "../../components/DataTable/DataTable";
-import type { Column } from "../../components/DataTable/type";
+import type { Column, RowEditHandler } from "../../components/DataTable/type";
 
 const DashboardStatistics = () => {
   const scrollRefWidget = useHorizontalWheelScroll<HTMLDivElement>();
@@ -68,6 +68,10 @@ const DashboardStatistics = () => {
       type: "text",
     },
   ];
+
+  const handleRowEdit: RowEditHandler<Employee> = (rowData, index) => {
+    alert(`Editing ${rowData.name}`);
+  };
   return (
     <div className="grid grid-cols-1 gap-4 sm:gap-6">
       <div className="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 sm:grid-cols-2 md:grid-cols-1  gap-4 sm:gap-6">
@@ -94,6 +98,7 @@ const DashboardStatistics = () => {
         pageSize={25}
         showCheckbox={true}
         showActions={true}
+        onRowEdit={handleRowEdit}
       />
       <div
         ref={scrollRefWidgetStats}

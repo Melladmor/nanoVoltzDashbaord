@@ -18,3 +18,10 @@ export type DataGridProps<T extends object> = {
   onRowEdit?: (row: T, index: number) => void;
   onRowSelect?: (selected: Set<number>) => void;
 };
+
+export type RowSelectHandler = (index: number, checked: boolean) => void;
+
+export type RowEditHandler<T extends object> = (
+  rowData: T,
+  index: number
+) => void;
