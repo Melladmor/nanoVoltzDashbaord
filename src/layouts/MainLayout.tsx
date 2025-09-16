@@ -9,9 +9,9 @@ const MainLayout = () => {
       <div>
         <SideBar />
       </div>
-      <div className="w-full h-[100vh]">
+      <div className="w-full ">
         <Header />
-        <div className="py-2">
+        <div className="pt-2 pb-4">
           <Suspense fallback={<div>Loading...</div>}>
             <Outlet />
           </Suspense>

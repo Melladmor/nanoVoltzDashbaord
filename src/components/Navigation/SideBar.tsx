@@ -8,8 +8,8 @@ const SideBar = () => {
   const { pathname } = useLocation();
   const MainPath = pathname.split("/")[1] || "";
   return (
-    <div>
-      <div className="py-2 ">
+    <div className="sticky left-0 top-0">
+      <div className="py-2">
         <div className="px-4 pb-6">
           <Logo />
         </div>

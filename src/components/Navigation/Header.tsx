@@ -11,7 +11,7 @@ const Header = () => {
   const links = routes?.find((el: RoutesI) => el?.path === MainPath);
 
   return (
-    <nav className="flex flex-row w-full px-3 items-center justify-between  py-5">
+    <nav className="flex flex-row w-full px-3 items-center justify-between sticky top-0 z-50 bg-bg shadow-[0_2px_2px_-3px_rgba(0,0,0,0.2)]  py-5">
       <div className="flex items-center gap-8">
         {links?.children?.map((el: RoutesElementsI) => {
           const isActive = pathname === el?.path;
