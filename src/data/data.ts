@@ -9,6 +9,7 @@ import LTC from "../assets/logo/ltc.svg";
 import XRP from "../assets/logo/xrp.svg";
 import TRX from "../assets/logo/trx.svg";
 import SUSHI from "../assets/logo/sushi.svg";
+import type { Column } from "../components/DataTable/type";
 export const WavyChartdata: WavyChartDataT[] = [
   { month: "Jan", value: 5.2 },
   { month: "Feb", value: 7.8 },
@@ -200,3 +201,92 @@ const generateSinusoidalData = (
 export const data1W: DataPoint[] = generateSinusoidalData(30, 0.3, 0.8, 1.2);
 export const data1M: DataPoint[] = generateSinusoidalData(60, 0.2, 1.0, 1.4);
 export const data1Y: DataPoint[] = generateSinusoidalData(365, 0.1, 1.2, 1.3);
+
+// Types for Employee data
+interface Employee {
+  name: string;
+  id: string;
+  phone: string;
+  appliedShift: string;
+  substitute: string;
+  status: "Active" | "Active Substitute" | "Inactive";
+  comments: string;
+}
+
+// Example usage component
+export const columns: Column[] = [
+  {
+    header: "Name",
+    field: "name",
+    type: "text",
+  },
+  {
+    header: "ID",
+    field: "id",
+    type: "text",
+  },
+  {
+    header: "Phone",
+    field: "phone",
+    type: "text",
+  },
+  {
+    header: "Applied Shift",
+    field: "appliedShift",
+    type: "multiline",
+  },
+  {
+    header: "Substitute",
+    field: "substitute",
+    type: "text",
+  },
+  {
+    header: "Status",
+    field: "status",
+    type: "status",
+  },
+  {
+    header: "Comments",
+    field: "comments",
+    type: "text",
+  },
+];
+
+export const tableData: Employee[] = [
+  {
+    name: "Andrew Jacob",
+    id: "ADSW-134KY",
+    phone: "+971 50 123 4567",
+    appliedShift: "9:00 - 18:00\nAll Days",
+    substitute: "N/A",
+    status: "Active",
+    comments: "N/A",
+  },
+  {
+    name: "John Castrovieh",
+    id: "ADSW-432F7",
+    phone: "+971 50 123 4567",
+    appliedShift: "9:00 - 18:00\nSun, Mon, Tue, Sat",
+    substitute: "N/A",
+    status: "Active Substitute",
+    comments: "N/A",
+  },
+  {
+    name: "Sarah Wilson",
+    id: "ADSW-789XY",
+    phone: "+971 50 555 0123",
+    appliedShift: "10:00 - 19:00\nMon, Wed, Fri",
+    substitute: "Available",
+    status: "Active",
+    comments: "Flexible hours",
+  },
+  {
+    name: "Mike Johnson",
+    id: "ADSW-456AB",
+    phone: "+971 50 987 6543",
+    appliedShift: "8:00 - 17:00\nAll Days",
+    substitute: "N/A",
+    status: "Inactive",
+    comments: "On leave",
+  },
+];

@@ -1,11 +1,18 @@
 import Widget from "../../components/Widget/Widget";
-import { statsWidgetData, WavyChartdata, widgets } from "../../data/data";
+import {
+  columns,
+  statsWidgetData,
+  tableData,
+  WavyChartdata,
+  widgets,
+} from "../../data/data";
 import WavyChartStatistics from "./components/WavyChartStatistics";
 import SOLANA from "../../assets/logo/solana.png";
 import VolumeChart from "../../components/Charts/VolumeChart";
 import StatsWidget from "../../components/Widget/StatsWidget";
 import type { StatsWidgetT, WidgetI } from "../../components/Widget/type";
 import { useHorizontalWheelScroll } from "../../hooks/useWheelHorizontalScroll";
+import DataTable from "../../components/DataTable/DataTable";
 
 const DashboardStatistics = () => {
   const scrollRefWidget = useHorizontalWheelScroll<HTMLDivElement>();
@@ -29,25 +36,18 @@ const DashboardStatistics = () => {
         {widgets?.map((el: WidgetI) => {
           return <Widget key={el?.id} {...el} />;
         })}
-        {widgets?.map((el: WidgetI) => {
-          return <Widget key={el?.id} {...el} />;
-        })}
-        {widgets?.map((el: WidgetI) => {
-          return <Widget key={el?.id} {...el} />;
-        })}
       </div>
+      <DataTable
+        title="Employees"
+        columns={columns}
+        data={tableData}
+        pageSize={25}
+        showCheckbox={true}
+        showActions={true}
+      />
       <div
         ref={scrollRefWidgetStats}
         className="flex gap-4 sm:gap-6 items-center overflow-x-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-        {statsWidgetData?.map((el: StatsWidgetT) => {
-          return <StatsWidget key={el?.id} {...el} />;
-        })}
-        {statsWidgetData?.map((el: StatsWidgetT) => {
-          return <StatsWidget key={el?.id} {...el} />;
-        })}
-        {statsWidgetData?.map((el: StatsWidgetT) => {
-          return <StatsWidget key={el?.id} {...el} />;
-        })}
         {statsWidgetData?.map((el: StatsWidgetT) => {
           return <StatsWidget key={el?.id} {...el} />;
         })}
