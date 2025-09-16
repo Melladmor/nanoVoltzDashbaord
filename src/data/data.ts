@@ -1,4 +1,8 @@
-import type { WavyChartDataT } from "../components/Charts/type";
+import type {
+  DataPoint,
+  TimePeriod,
+  WavyChartDataT,
+} from "../components/Charts/type";
 import type { StatsWidgetT, WidgetI } from "../components/Widget/type";
 import SHIB from "../assets/logo/shiba.svg";
 import LTC from "../assets/logo/ltc.svg";
@@ -161,3 +165,38 @@ export const statsWidgetData: StatsWidgetT[] = [
     ],
   },
 ];
+
+export const periods: TimePeriod[] = ["1W", "1M", "1Y"];
+
+export const monthLabels: string[] = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+// Generate dense data for thin bars effect
+const generateSinusoidalData = (
+  length: number,
+  frequency: number,
+  amplitude: number,
+  offset: number
+): DataPoint[] => {
+  return Array.from({ length }, (_, i) => ({
+    period: `D${i + 1}`,
+    value: Math.sin(i * frequency) * amplitude + offset + Math.random() * 0.4,
+  }));
+};
+
+// Generate data for Volume Chart
+export const data1W: DataPoint[] = generateSinusoidalData(30, 0.3, 0.8, 1.2);
+export const data1M: DataPoint[] = generateSinusoidalData(60, 0.2, 1.0, 1.4);
+export const data1Y: DataPoint[] = generateSinusoidalData(365, 0.1, 1.2, 1.3);

@@ -7,38 +7,17 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import type { DataPoint, TimePeriod } from "./type";
+import { data1M, data1W, data1Y, monthLabels, periods } from "../../data/data";
+import CountUp from "react-countup";
 
 // Type definitions
-interface DataPoint {
-  period: string;
-  value: number;
-}
-
-type TimePeriod = "1W" | "1M" | "1Y";
 
 interface VolumeChartProps {
-  className?: string;
+  amount?: string;
 }
 
-// Generate dense data for thin bars effect
-const generateSinusoidalData = (
-  length: number,
-  frequency: number,
-  amplitude: number,
-  offset: number
-): DataPoint[] => {
-  return Array.from({ length }, (_, i) => ({
-    period: `D${i + 1}`,
-    value: Math.sin(i * frequency) * amplitude + offset + Math.random() * 0.4,
-  }));
-};
-
-// Dense data for thin bars - like daily data points
-const data1W: DataPoint[] = generateSinusoidalData(30, 0.3, 0.8, 1.2);
-const data1M: DataPoint[] = generateSinusoidalData(60, 0.2, 1.0, 1.4);
-const data1Y: DataPoint[] = generateSinusoidalData(365, 0.1, 1.2, 1.3);
-
-const VolumeChart: React.FC<VolumeChartProps> = ({ className = "" }) => {
+const VolumeChart: React.FC<VolumeChartProps> = ({ amount }) => {
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>("1Y");
 
   const getCurrentData = (): DataPoint[] => {
@@ -54,44 +33,33 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ className = "" }) => {
     }
   };
 
-  const periods: TimePeriod[] = ["1W", "1M", "1Y"];
-
-  const monthLabels: string[] = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
   return (
-    <div className={`w-full bg-white rounded-xl p-6 ${className}`}>
+    <div className={`w-full bg-white rounded-xl p-6`}>
       {/* Header */}
-      <div className="flex justify-between items-start mb-6">
+      <div className="flex justify-between items-start">
         <div>
-          <h3 className="text-gray-600 text-sm mb-1">
-            Volume {selectedPeriod}
-          </h3>
-          <h2 className="text-2xl font-semibold text-gray-900">$1.42T</h2>
+          <h3 className="text-icon-bg text-sm mb-1">Volume {selectedPeriod}</h3>
+          <p className="text-black text-2xl font-bold">
+            <CountUp
+              end={Number(amount?.replace(/[^0-9.]/g, ""))}
+              decimals={amount?.split(".")[1]?.length || 0}
+              duration={1}
+              prefix="$"
+            />
+            T
+          </p>
         </div>
 
         {/* Time period buttons */}
         <div className="flex gap-1">
-          {periods.map((period: TimePeriod) => (
+          {periods?.map((period: TimePeriod) => (
             <button
               key={period}
               onClick={() => setSelectedPeriod(period)}
-              className={`px-3 py-1 text-sm rounded transition-colors ${
+              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
                 selectedPeriod === period
-                  ? "bg-pink-200 text-pink-800"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  ? "bg-[#FECACA] text-pink-800"
+                  : "bg-hover-pink text-gray-600 hover:bg-gray-200"
               }`}
               type="button">
               {period}
@@ -101,22 +69,19 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ className = "" }) => {
       </div>
 
       {/* Chart */}
-      <div className="w-full h-48 mb-6">
+      <div className="w-full h-44">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={getCurrentData()}
             margin={{
               top: 20,
-              right: 30,
-              left: 20,
-              bottom: 20,
             }}
             barCategoryGap={0.5}>
             <CartesianGrid
-              strokeDasharray="3 3"
+              strokeDasharray="2 2"
               stroke="#f0f0f0"
               horizontal={true}
-              vertical={false}
+              vertical={true}
             />
 
             <XAxis
@@ -137,17 +102,16 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ className = "" }) => {
             />
           </BarChart>
         </ResponsiveContainer>
-
         {/* Custom X-axis labels */}
-        <div className="flex justify-between text-xs text-gray-500 mt-2 px-8">
-          {monthLabels.map((month: string) => (
+        <div className="flex justify-between text-xs text-icon-bg px-0">
+          {monthLabels?.map((month: string) => (
             <span key={month}>{month}</span>
           ))}
         </div>
       </div>
 
       {/* Legend */}
-      <div className="flex gap-6 text-sm">
+      <div className="flex gap-6 text-sm mt-8">
         {[
           { color: "bg-green-500", label: "Legend" },
           { color: "bg-yellow-500", label: "Legend" },
@@ -156,8 +120,8 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ className = "" }) => {
           { color: "bg-orange-500", label: "Legend" },
         ].map((item, index) => (
           <div key={index} className="flex items-center gap-2">
-            <div className={`w-3 h-0.5 ${item.color}`}></div>
-            <span className="text-gray-700">{item.label}</span>
+            <div className={`w-3 h-1 rounded-lg ${item.color}`}></div>
+            <span className="text-black text-xs">{item.label}</span>
           </div>
         ))}
       </div>

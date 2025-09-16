@@ -17,7 +17,7 @@ const DashboardStatistics = () => {
           title="TVL"
           chartData={WavyChartdata}
         />
-        <VolumeChart />
+        <VolumeChart amount="1.42" />
       </div>
       <div className="bg-white p-6 rounded-2xl flex gap-6 items-center">
         {widgets?.map((el: WidgetI) => {

@@ -21,7 +21,7 @@ const WavyChart = ({ data, refrenceDot }: Props) => {
         <AreaChart
           data={data}
           margin={{
-            top: 40,
+            top: 20,
             bottom: 20,
           }}>
           <defs>
@@ -63,7 +63,7 @@ const WavyChart = ({ data, refrenceDot }: Props) => {
             r={4}
             fill="white"
             stroke="#ff6b7a"
-            strokeWidth={2}
+            strokeWidth={3}
           />
         </AreaChart>
       </ResponsiveContainer>
