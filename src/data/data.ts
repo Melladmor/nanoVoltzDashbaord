@@ -216,7 +216,7 @@ export const data1Y: DataPoint[] = generateSinusoidalData(
   5
 );
 // Types for Employee data
-interface Employee {
+export interface Employee {
   name: string;
   id: string;
   phone: string;
@@ -225,45 +225,6 @@ interface Employee {
   status: "Active" | "Active Substitute" | "Inactive";
   comments: string;
 }
-
-// Example usage component
-export const columns: Column[] = [
-  {
-    header: "Name",
-    field: "name",
-    type: "text",
-  },
-  {
-    header: "ID",
-    field: "id",
-    type: "text",
-  },
-  {
-    header: "Phone",
-    field: "phone",
-    type: "text",
-  },
-  {
-    header: "Applied Shift",
-    field: "appliedShift",
-    type: "multiline",
-  },
-  {
-    header: "Substitute",
-    field: "substitute",
-    type: "text",
-  },
-  {
-    header: "Status",
-    field: "status",
-    type: "status",
-  },
-  {
-    header: "Comments",
-    field: "comments",
-    type: "text",
-  },
-];
 
 export const tableData: Employee[] = [
   {

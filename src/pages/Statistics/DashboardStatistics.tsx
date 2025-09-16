@@ -1,10 +1,10 @@
 import Widget from "../../components/Widget/Widget";
 import {
-  columns,
   statsWidgetData,
   tableData,
   WavyChartdata,
   widgets,
+  type Employee,
 } from "../../data/data";
 import WavyChartStatistics from "./components/WavyChartStatistics";
 import SOLANA from "../../assets/logo/solana.png";
@@ -13,11 +13,61 @@ import StatsWidget from "../../components/Widget/StatsWidget";
 import type { StatsWidgetT, WidgetI } from "../../components/Widget/type";
 import { useHorizontalWheelScroll } from "../../hooks/useWheelHorizontalScroll";
 import DataTable from "../../components/DataTable/DataTable";
+import type { Column } from "../../components/DataTable/type";
 
 const DashboardStatistics = () => {
   const scrollRefWidget = useHorizontalWheelScroll<HTMLDivElement>();
   const scrollRefWidgetStats = useHorizontalWheelScroll<HTMLDivElement>();
-
+  const columns: Column<Employee>[] = [
+    {
+      header: "Name",
+      field: "name",
+      type: "text",
+    },
+    {
+      header: "ID",
+      field: "id",
+      type: "text",
+    },
+    {
+      header: "Phone",
+      field: "phone",
+      type: "text",
+    },
+    {
+      header: "Applied Shift",
+      field: "appliedShift",
+      type: "multiline",
+    },
+    {
+      header: "Substitute",
+      field: "substitute",
+      type: "text",
+    },
+    {
+      header: "Status",
+      field: "status",
+      render: (value) => {
+        return (
+          <div
+            className={
+              value === "Active"
+                ? "text-links-acitve"
+                : value === "Active Substitute"
+                ? "text-blue-600"
+                : "text-red-900"
+            }>
+            {value}
+          </div>
+        );
+      },
+    },
+    {
+      header: "Comments",
+      field: "comments",
+      type: "text",
+    },
+  ];
   return (
     <div className="grid grid-cols-1 gap-4 sm:gap-6">
       <div className="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 sm:grid-cols-2 md:grid-cols-1  gap-4 sm:gap-6">

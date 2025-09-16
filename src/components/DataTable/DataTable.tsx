@@ -9,9 +9,31 @@ import {
   MdLocalPrintshop,
   MdModeEditOutline,
 } from "react-icons/md";
-import type { Column, DataGridProps } from "./type";
 
-const DataTable: React.FC<DataGridProps> = ({
+/* ================== Types (داخل الملف) ================== */
+export type ColumnType = "text" | "multiline" | "status";
+
+export type Column<T extends object> = {
+  field: keyof T;
+  header: string | React.ReactNode;
+  width?: React.CSSProperties["width"];
+  type?: ColumnType;
+  render?: (value: T[keyof T], row: T) => React.ReactNode;
+};
+
+export type DataGridProps<T extends object> = {
+  columns: Array<Column<T>>;
+  data: T[];
+  title?: string;
+  pageSize?: number;
+  showCheckbox?: boolean;
+  showActions?: boolean;
+  onRowEdit?: (row: T, index: number) => void;
+  onRowSelect?: (selected: Set<number>) => void;
+};
+/* ======================================================== */
+
+const DataTable = <T extends object>({
   columns,
   data,
   title = "Data Table",
@@ -20,83 +42,54 @@ const DataTable: React.FC<DataGridProps> = ({
   showActions = true,
   onRowEdit,
   onRowSelect,
-}) => {
+}: DataGridProps<T>) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
-  const totalPages = Math.ceil(data.length / pageSize);
+  const totalPages = Math.max(1, Math.ceil(data.length / pageSize));
   const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
+  const endIndex = Math.min(startIndex + pageSize, data.length);
   const currentData = data.slice(startIndex, endIndex);
 
   const handleSelectAll = (checked: boolean): void => {
     setSelectAll(checked);
     const newSelected = new Set<number>();
-
     if (checked) {
-      const allIds = currentData.map((_, index) => startIndex + index);
-      allIds.forEach((id) => newSelected.add(id));
+      for (let i = 0; i < currentData.length; i++)
+        newSelected.add(startIndex + i);
     }
-
     setSelectedRows(newSelected);
-    if (onRowSelect) {
-      onRowSelect(newSelected);
-    }
+    onRowSelect?.(newSelected);
   };
 
   const handleRowSelect = (index: number, checked: boolean): void => {
     const newSelected = new Set(selectedRows);
     const actualIndex = startIndex + index;
-
-    if (checked) {
-      newSelected.add(actualIndex);
-    } else {
-      newSelected.delete(actualIndex);
-    }
-
+    checked ? newSelected.add(actualIndex) : newSelected.delete(actualIndex);
     setSelectedRows(newSelected);
-    setSelectAll(newSelected.size === currentData.length);
-
-    if (onRowSelect) {
-      onRowSelect(newSelected);
-    }
+    setSelectAll(
+      newSelected.size === currentData.length && currentData.length > 0
+    );
+    onRowSelect?.(newSelected);
   };
 
-  const handleEdit = (rowData: any, index: number): void => {
-    if (onRowEdit) {
-      onRowEdit(rowData, startIndex + index);
-    }
+  const handleEdit = (rowData: T, index: number): void => {
+    onRowEdit?.(rowData, startIndex + index);
   };
 
   const renderCellContent = (
-    value: any,
-    column: Column,
-    row: any
+    value: T[keyof T],
+    column: Column<T>,
+    row: T
   ): React.ReactNode => {
-    if (column.render) {
-      return column.render(value, row);
-    }
-
-    if (column.type === "status") {
-      const isActive = value === "Active" || value === "Active Substitute";
-      return (
-        <span
-          className={`px-2 py-1 rounded text-xs font-medium ${
-            isActive
-              ? "bg-green-100 text-green-700"
-              : "bg-gray-100 text-gray-600"
-          }`}>
-          {value}
-        </span>
-      );
-    }
+    if (column.render) return column.render(value, row);
 
     if (column.type === "multiline") {
-      const lines = String(value).split("\n");
+      const lines = String(value ?? "").split("\n");
       return (
         <div className="text-sm">
-          {lines.map((line: string, idx: number) => (
+          {lines.map((line, idx) => (
             <div
               key={idx}
               className={idx === 0 ? "font-medium" : "text-gray-500"}>
@@ -107,7 +100,7 @@ const DataTable: React.FC<DataGridProps> = ({
       );
     }
 
-    return value || "N/A";
+    return (value as React.ReactNode) ?? "N/A";
   };
 
   return (
@@ -151,7 +144,7 @@ const DataTable: React.FC<DataGridProps> = ({
                   />
                 </th>
               )}
-              {columns.map((column: Column, index: number) => (
+              {columns.map((column, index) => (
                 <th
                   key={index}
                   className="px-4 py-3 text-left text-[10px] text-nowrap sm:text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -166,8 +159,9 @@ const DataTable: React.FC<DataGridProps> = ({
               )}
             </tr>
           </thead>
+
           <tbody className="divide-y divide-gray-200">
-            {currentData.map((row: any, rowIndex: number) => (
+            {currentData.map((row, rowIndex) => (
               <tr
                 key={rowIndex}
                 className={`hover:bg-gray-50 text-nowrap ${
@@ -185,18 +179,23 @@ const DataTable: React.FC<DataGridProps> = ({
                     />
                   </td>
                 )}
-                {columns.map((column: Column, colIndex: number) => (
-                  <td
-                    key={colIndex}
-                    className="px-4 py-3 text-[10px] sm:text-sm text-icon-bg">
-                    {renderCellContent(row[column.field], column, row)}
-                  </td>
-                ))}
+
+                {columns.map((column, colIndex) => {
+                  const value = row[column.field];
+                  return (
+                    <td
+                      key={colIndex}
+                      className="px-4 py-3 text-[10px] sm:text-sm text-icon-bg">
+                      {renderCellContent(value as T[keyof T], column, row)}
+                    </td>
+                  );
+                })}
+
                 {showActions && (
                   <td className="px-4 py-3">
                     <button
                       onClick={() => handleEdit(row, rowIndex)}
-                      className="p-1 text-links-acitve  hover:bg-hover-pink cursor-pointer rounded"
+                      className="p-1 text-links-acitve hover:bg-hover-pink cursor-pointer rounded"
                       type="button">
                       <MdModeEditOutline className="w-4 h-4" />
                     </button>
@@ -214,29 +213,30 @@ const DataTable: React.FC<DataGridProps> = ({
           <span className="text-[10px] sm:text-sm text-gray-700 text-nowrap">
             Rows per page:
           </span>
-          <select className="rounded  py-1 text-[10px] sm:text-sm">
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
+          <select
+            className="rounded py-1 text-[10px] sm:text-sm"
+            value={pageSize}
+            onChange={() => {}}>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
           </select>
         </div>
 
         <div className="flex items-center space-x-4">
           <span className="text-[10px] sm:text-sm text-nowrap text-gray-700">
-            {startIndex + 1}-{Math.min(endIndex, data.length)} of {data.length}
+            {data.length === 0 ? 0 : startIndex + 1}-{endIndex} of {data.length}
           </span>
           <div className="flex items-center space-x-1">
             <button
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
               className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               type="button">
               <MdChevronLeft className="w-4 h-4" />
             </button>
             <button
-              onClick={() =>
-                setCurrentPage(Math.min(totalPages, currentPage + 1))
-              }
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
               className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               type="button">
