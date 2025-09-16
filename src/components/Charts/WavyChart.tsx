@@ -8,6 +8,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import type { WavyChartDataT } from "./type";
+import { monthLabels } from "../../data/data";
 
 type Props = {
   data: WavyChartDataT[];
@@ -16,7 +17,7 @@ type Props = {
 
 const WavyChart = ({ data, refrenceDot }: Props) => {
   return (
-    <div className="w-full h-42 sm:h-64">
+    <div className="w-full h-42 sm:h-55">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
@@ -39,6 +40,7 @@ const WavyChart = ({ data, refrenceDot }: Props) => {
           />
 
           <XAxis
+            hide
             dataKey="month"
             axisLine={false}
             tickLine={false}
@@ -67,6 +69,11 @@ const WavyChart = ({ data, refrenceDot }: Props) => {
           />
         </AreaChart>
       </ResponsiveContainer>
+      <div className="flex justify-between  text-[8px] sm:text-xs text-icon-bg px-0">
+        {monthLabels?.map((month: string) => (
+          <span key={month}>{month}</span>
+        ))}
+      </div>
 
       {/* <div className="relative">
         <div

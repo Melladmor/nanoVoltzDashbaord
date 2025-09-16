@@ -19,12 +19,12 @@ const DashboardStatistics = () => {
         />
         <VolumeChart amount="1.42" />
       </div>
-      <div className="bg-white p-6 rounded-2xl flex gap-4 sm:gap-6 items-center overflow-x-scroll">
+      <div className="bg-white p-6 rounded-2xl flex gap-4 sm:gap-6 items-center overflow-x-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {widgets?.map((el: WidgetI) => {
           return <Widget key={el?.id} {...el} />;
         })}
       </div>
-      <div className="flex gap-4 sm:gap-6 items-center overflow-x-scroll">
+      <div className="flex gap-4 sm:gap-6 items-center overflow-x-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {statsWidgetData?.map((el: StatsWidgetT) => {
           return <StatsWidget key={el?.id} {...el} />;
         })}
