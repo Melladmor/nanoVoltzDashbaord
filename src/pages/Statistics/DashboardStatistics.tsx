@@ -1,14 +1,32 @@
 import Widget from "../../components/Widget/Widget";
-import { widgets } from "../../components/Widget/data";
-import type { WidgetI } from "../../components/Widget/type";
+import { statsWidgetData, WavyChartdata, widgets } from "../../data/data";
+import WavyChartStatistics from "./components/WavyChartStatistics";
+import SOLANA from "../../assets/logo/solana.png";
+import VolumeChart from "../../components/Charts/VolumeChart";
+import StatsWidget from "../../components/Widget/StatsWidget";
+import type { StatsWidgetT, WidgetI } from "../../components/Widget/type";
 
 const DashboardStatistics = () => {
   return (
-    <div>
-      <h1 className="text-xl font-bold">Dashboard Statistics</h1>
-      <div className="bg-white p-6 rounded-2xl flex gap-5 items-center">
+    <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-2 gap-6">
+        <WavyChartStatistics
+          amount="4.68B"
+          refrenceDot={6.8}
+          icon={SOLANA}
+          title="TVL"
+          chartData={WavyChartdata}
+        />
+        <VolumeChart />
+      </div>
+      <div className="bg-white p-6 rounded-2xl flex gap-6 items-center">
         {widgets?.map((el: WidgetI) => {
           return <Widget key={el?.id} {...el} />;
+        })}
+      </div>
+      <div className="flex gap-6 items-center">
+        {statsWidgetData?.map((el: StatsWidgetT) => {
+          return <StatsWidget key={el?.id} {...el} />;
         })}
       </div>
     </div>
