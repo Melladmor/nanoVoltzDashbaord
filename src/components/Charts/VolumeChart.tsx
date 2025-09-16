@@ -39,7 +39,7 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ amount }) => {
       <div className="flex justify-between items-start">
         <div>
           <h3 className="text-icon-bg text-sm mb-1">Volume {selectedPeriod}</h3>
-          <p className="text-black text-2xl font-bold">
+          <p className="text-black text-sm sm:text-2xl font-bold">
             <CountUp
               end={Number(amount?.replace(/[^0-9.]/g, ""))}
               decimals={amount?.split(".")[1]?.length || 0}
@@ -56,7 +56,7 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ amount }) => {
             <button
               key={period}
               onClick={() => setSelectedPeriod(period)}
-              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              className={`px-3 py-1  text-[10px] flex items-center justify-center sm:text-sm rounded-lg transition-colors ${
                 selectedPeriod === period
                   ? "bg-[#FECACA] text-pink-800"
                   : "bg-hover-pink text-gray-600 hover:bg-gray-200"
@@ -103,7 +103,7 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ amount }) => {
           </BarChart>
         </ResponsiveContainer>
         {/* Custom X-axis labels */}
-        <div className="flex justify-between text-xs text-icon-bg px-0">
+        <div className="flex justify-between  text-[8px] sm:text-xs text-icon-bg px-0">
           {monthLabels?.map((month: string) => (
             <span key={month}>{month}</span>
           ))}
@@ -111,7 +111,7 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ amount }) => {
       </div>
 
       {/* Legend */}
-      <div className="flex gap-6 text-sm mt-8">
+      <div className="flex flex-wrap gap-4 sm:gap-6 text-[8px] sm:text-sm mt-8">
         {[
           { color: "bg-green-500", label: "Legend" },
           { color: "bg-yellow-500", label: "Legend" },
@@ -121,7 +121,9 @@ const VolumeChart: React.FC<VolumeChartProps> = ({ amount }) => {
         ].map((item, index) => (
           <div key={index} className="flex items-center gap-2">
             <div className={`w-3 h-1 rounded-lg ${item.color}`}></div>
-            <span className="text-black text-xs">{item.label}</span>
+            <span className="text-black text-[8px] sm:text-xs">
+              {item.label}
+            </span>
           </div>
         ))}
       </div>
