@@ -184,24 +184,37 @@ export const monthLabels: string[] = [
   "Dec",
 ];
 
-// Generate dense data for thin bars effect
+const precomputedNoise = Array.from({ length: 365 }, () => Math.random() * 0.4);
+
 const generateSinusoidalData = (
   length: number,
   frequency: number,
   amplitude: number,
-  offset: number
+  offset: number,
+  step: number = 1
 ): DataPoint[] => {
-  return Array.from({ length }, (_, i) => ({
-    period: `D${i + 1}`,
-    value: Math.sin(i * frequency) * amplitude + offset + Math.random() * 0.4,
-  }));
+  const arr: DataPoint[] = [];
+  for (let i = 0; i < length; i += step) {
+    arr.push({
+      period: `D${i + 1}`,
+      value:
+        Math.sin(i * frequency) * amplitude +
+        offset +
+        precomputedNoise[i % precomputedNoise.length],
+    });
+  }
+  return arr;
 };
 
-// Generate data for Volume Chart
 export const data1W: DataPoint[] = generateSinusoidalData(30, 0.3, 0.8, 1.2);
 export const data1M: DataPoint[] = generateSinusoidalData(60, 0.2, 1.0, 1.4);
-export const data1Y: DataPoint[] = generateSinusoidalData(365, 0.1, 1.2, 1.3);
-
+export const data1Y: DataPoint[] = generateSinusoidalData(
+  365,
+  0.1,
+  1.2,
+  1.3,
+  5
+);
 // Types for Employee data
 interface Employee {
   name: string;

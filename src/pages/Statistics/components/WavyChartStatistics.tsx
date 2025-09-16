@@ -1,4 +1,3 @@
-import React from "react";
 import CountUp from "react-countup";
 import type { WavyChartStatisticsI } from "./type.d";
 import WavyChart from "../../../components/Charts/WavyChart";
