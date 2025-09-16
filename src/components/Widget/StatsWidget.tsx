@@ -27,7 +27,7 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
       <div className="flex justify-between items-start mb-1">
         <div>
           <h3 className="text-icon-bg text-sm font-medium mb-1">{title}</h3>
-          <h2 className="text-2xl font-bold text-black">{value}</h2>
+          <h2 className="text-lg sm:text-2xl font-bold text-black">{value}</h2>
         </div>
         <button className="text-gray-400 hover:text-gray-600">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -38,7 +38,7 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
         </button>
       </div>
       <div className="flex items-center">
-        <div className="flex items-center gap-1 font-bold text-sm ">
+        <div className="flex items-center gap-1 font-bold text-[12px] sm:text-sm ">
           {trend?.trendType === "up" ? (
             <FaArrowTrendUp className="text-green-500 animate-pulse-up" />
           ) : trend?.trendType === "down" ? (
@@ -53,7 +53,7 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
                 : trend?.trendType === "down"
                 ? "text-red-500"
                 : "text-gray-400"
-            } text-sm`}>
+            } `}>
             <CountUp
               end={Number(String(trend?.value).replace(/[^0-9.-]/g, ""))}
               decimals={2}
