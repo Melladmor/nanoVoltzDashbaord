@@ -5,11 +5,11 @@ import { Suspense } from "react";
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-row gap-4 bg-bg">
-      <div>
+    <div className="flex flex-row gap-4 bg-bg min-h-[100vh]">
+      <div className="2xl:w-[11%] xl:w-[12%] lg:w-[18%] md:w-[25%] w-[27%]">
         <SideBar />
       </div>
-      <div className="w-full ">
+      <div className="w-full">
         {/* <Header /> */}
         <div className="pt-2 pb-4 pr-4">
           <Suspense fallback={<div>Loading...</div>}>
