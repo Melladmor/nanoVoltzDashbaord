@@ -111,7 +111,7 @@ const DataTable: React.FC<DataGridProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-4">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <h2 className="text-xs sm:text-lg font-semibold text-icon-bg">

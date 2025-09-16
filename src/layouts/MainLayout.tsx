@@ -10,7 +10,7 @@ const MainLayout = () => {
         <SideBar />
       </div>
       <div className="w-full">
-        {/* <Header /> */}
+        <Header />
         <div className="pt-2 pb-4 pr-4">
           <Suspense fallback={<div>Loading...</div>}>
             <Outlet />
