@@ -16,7 +16,7 @@ type Props = {
 
 const WavyChart = ({ data, refrenceDot }: Props) => {
   return (
-    <div className="w-full h-64">
+    <div className="w-full h-42 sm:h-64">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
@@ -68,7 +68,7 @@ const WavyChart = ({ data, refrenceDot }: Props) => {
         </AreaChart>
       </ResponsiveContainer>
 
-      <div className="relative">
+      {/* <div className="relative">
         <div
           className="absolute bg-gray-800 text-white text-xs px-2 py-1 rounded"
           style={{
@@ -78,7 +78,7 @@ const WavyChart = ({ data, refrenceDot }: Props) => {
           }}>
           {refrenceDot}B
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

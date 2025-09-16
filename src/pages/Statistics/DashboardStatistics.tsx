@@ -9,7 +9,7 @@ import type { StatsWidgetT, WidgetI } from "../../components/Widget/type";
 const DashboardStatistics = () => {
   return (
     <div className="grid grid-cols-1 gap-6">
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <WavyChartStatistics
           amount="4.68B"
           refrenceDot={6.8}
@@ -19,7 +19,7 @@ const DashboardStatistics = () => {
         />
         <VolumeChart amount="1.42" />
       </div>
-      <div className="bg-white p-6 rounded-2xl flex gap-6 items-center">
+      {/* <div className="bg-white p-6 rounded-2xl flex gap-6 items-center">
         {widgets?.map((el: WidgetI) => {
           return <Widget key={el?.id} {...el} />;
         })}
@@ -28,7 +28,7 @@ const DashboardStatistics = () => {
         {statsWidgetData?.map((el: StatsWidgetT) => {
           return <StatsWidget key={el?.id} {...el} />;
         })}
-      </div>
+      </div> */}
     </div>
   );
 };
