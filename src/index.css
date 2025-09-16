@@ -1,4 +1,8 @@
 @import "tailwindcss";
+body {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
 @theme {
   /* Surfaces */
   --color-bg: #fef2f2; /* page background (soft pink) */
@@ -8,6 +12,7 @@
   --color-hover-pink: #fee1e1;
   --color-icon-bg: #475569;
   --color-links-acitve: #f05454;
+  --color-wedget-title: #dbd5d8;
 
   /* Text */
   --color-text: #1b1d22; /* primary text */
@@ -31,4 +36,33 @@
   --color-gray-600: #686667;
   --color-gray-400: #a09fa0;
   --color-gray-300: #b9bcc4;
+}
+@layer utilities {
+  @keyframes pulse-up {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+
+  @keyframes pulse-down {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(3px);
+    }
+  }
+
+  .animate-pulse-up {
+    animation: pulse-up 1.5s ease-in-out infinite;
+  }
+
+  .animate-pulse-down {
+    animation: pulse-down 1.5s ease-in-out infinite;
+  }
 }
