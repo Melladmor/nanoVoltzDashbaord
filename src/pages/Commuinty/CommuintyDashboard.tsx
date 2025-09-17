@@ -1,7 +1,7 @@
 const CommuintyDashboard = () => {
   return (
     <div>
-      <h1 className="text-xl font-bold">Dashboard Commuinty</h1>
+      <h1 className="text-xl font-bold">Commuinty Dashboard</h1>
     </div>
   );
 };

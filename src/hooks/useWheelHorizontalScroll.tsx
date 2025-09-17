@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 
+// Custom hook: enables smooth horizontal scrolling with mouse wheel
 export function useHorizontalWheelScroll<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
 
@@ -7,9 +8,10 @@ export function useHorizontalWheelScroll<T extends HTMLElement>() {
     const el = ref.current;
     if (!el) return;
 
-    let rafId: number | null = null;
-    let pendingDelta = 0;
+    let rafId: number | null = null; // requestAnimationFrame ID
+    let pendingDelta = 0; // accumulate wheel deltas until flushed
 
+    // Apply accumulated delta once per animation frame
     const flush = () => {
       if (pendingDelta !== 0) {
         el.scrollLeft += pendingDelta;
@@ -18,10 +20,11 @@ export function useHorizontalWheelScroll<T extends HTMLElement>() {
       rafId = null;
     };
 
+    // Handle wheel event (vertical delta -> horizontal scroll)
     const onWheel = (e: WheelEvent) => {
       if (e.deltaY === 0) return;
 
-      e.preventDefault();
+      e.preventDefault(); // prevent vertical scroll
       pendingDelta += e.deltaY;
 
       if (!rafId) {
@@ -29,6 +32,7 @@ export function useHorizontalWheelScroll<T extends HTMLElement>() {
       }
     };
 
+    // Attach wheel listener (must be non-passive to allow preventDefault)
     el.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
@@ -37,5 +41,5 @@ export function useHorizontalWheelScroll<T extends HTMLElement>() {
     };
   }, []);
 
-  return ref;
+  return ref; // assign this ref to the scrollable element
 }

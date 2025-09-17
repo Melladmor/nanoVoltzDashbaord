@@ -53,6 +53,8 @@ export const CommuintyDashboard = lazy(
 const Setting = lazy(() => import("../pages/Setting/Setting"));
 const More = lazy(() => import("../pages/More/More"));
 
+
+// Routes data
 export const routes: RoutesI[] = [
   {
     id: 1,

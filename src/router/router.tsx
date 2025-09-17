@@ -11,13 +11,13 @@ import Error from "../components/Errors";
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* Parent layout route (MainLayout must render <Outlet />) */}
+      {/* Root route that wraps all pages (MainLayout must include <Outlet />) */}
       <Route path="/" element={<MainLayout />}>
-        {/* Map top-level routes from the routes config */}
+        {/* Loop through top-level routes from config */}
         {routes?.map((el: RoutesI) => {
           const Element = el?.element;
 
-          /* Render nested children if present (child paths should be relative) */
+          // If the route has children, render nested routes
           if (el?.children) {
             return (
               <Route key={el?.path} path={el?.path} element={<Element />}>
@@ -35,12 +35,12 @@ export const router = createBrowserRouter(
             );
           }
 
-          /* Render a leaf route (no children) */
+          // If no children, render as a leaf route
           return <Route key={el?.path} path={el?.path} element={<Element />} />;
         })}
       </Route>
 
-      {/* Catch-all (404) route */}
+      {/* Fallback for unknown routes (404 page) */}
       <Route path="*" element={<Error />} />
     </>
   )

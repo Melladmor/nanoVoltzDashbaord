@@ -9,7 +9,8 @@ import LTC from "../assets/logo/ltc.svg";
 import XRP from "../assets/logo/xrp.svg";
 import TRX from "../assets/logo/trx.svg";
 import SUSHI from "../assets/logo/sushi.svg";
-import type { Column } from "../components/DataTable/type";
+
+// Monthly area-chart sample data
 export const WavyChartdata: WavyChartDataT[] = [
   { month: "Jan", value: 5.2 },
   { month: "Feb", value: 7.8 },
@@ -25,6 +26,7 @@ export const WavyChartdata: WavyChartDataT[] = [
   { month: "Dec", value: 15.5 },
 ];
 
+// Small widgets (icon + title + amount + trend)
 export const widgets: WidgetI[] = [
   {
     id: 1,
@@ -78,6 +80,7 @@ export const widgets: WidgetI[] = [
   },
 ];
 
+// Big stats widgets (value + tiny sparkline + trend)
 export const statsWidgetData: StatsWidgetT[] = [
   {
     id: 1,
@@ -167,8 +170,10 @@ export const statsWidgetData: StatsWidgetT[] = [
   },
 ];
 
+// Period options used by UI toggles
 export const periods: TimePeriod[] = ["1W", "1M", "1Y"];
 
+// Static month labels for footers/axes
 export const monthLabels: string[] = [
   "Jan",
   "Feb",
@@ -184,8 +189,10 @@ export const monthLabels: string[] = [
   "Dec",
 ];
 
+// Precomputed random noise to make synthetic series look less uniform
 const precomputedNoise = Array.from({ length: 365 }, () => Math.random() * 0.4);
 
+// Helper to generate smooth, noisy sine-wave time series
 const generateSinusoidalData = (
   length: number,
   frequency: number,
@@ -196,7 +203,7 @@ const generateSinusoidalData = (
   const arr: DataPoint[] = [];
   for (let i = 0; i < length; i += step) {
     arr.push({
-      period: `D${i + 1}`,
+      period: `D${i + 1}`, // human-readable day index
       value:
         Math.sin(i * frequency) * amplitude +
         offset +
@@ -206,6 +213,7 @@ const generateSinusoidalData = (
   return arr;
 };
 
+// Synthetic datasets for bar chart (different periods)
 export const data1W: DataPoint[] = generateSinusoidalData(30, 0.3, 0.8, 1.2);
 export const data1M: DataPoint[] = generateSinusoidalData(60, 0.2, 1.0, 1.4);
 export const data1Y: DataPoint[] = generateSinusoidalData(
@@ -215,17 +223,19 @@ export const data1Y: DataPoint[] = generateSinusoidalData(
   1.3,
   5
 );
-// Types for Employee data
+
+// Table row type (employees sample)
 export interface Employee {
   name: string;
   id: string;
   phone: string;
-  appliedShift: string;
+  appliedShift: string; // supports multiline via "\n"
   substitute: string;
   status: "Active" | "Active Substitute" | "Inactive";
   comments: string;
 }
 
+// Demo table data for DataTable component
 export const tableData: Employee[] = [
   {
     name: "Andrew Jacob",

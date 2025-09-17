@@ -10,6 +10,7 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
   value,
   trend,
 }) => {
+  // Choose colors based on trend direction
   const { stroke, fillFrom, fillTo } = useMemo(() => {
     if (trend?.trendType === "up")
       return { stroke: "#22c55e", fillFrom: "0.28", fillTo: "0.05" };
@@ -18,18 +19,21 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
     return { stroke: "#94a3b8", fillFrom: "0.22", fillTo: "0.06" };
   }, [trend?.trendType]);
 
+  // Stable, title-based gradient id (unique per widget title)
   const gradId = useMemo(
     () => `sw-grad-${title?.replace(/\s+/g, "-").toLowerCase()}`,
     [title]
   );
+
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 min-w-[350px]">
+      {/* Header: title, value, and overflow button */}
       <div className="flex justify-between items-start mb-1">
         <div>
           <h3 className="text-icon-bg text-sm font-medium mb-1">{title}</h3>
           <h2 className="text-lg sm:text-2xl font-bold text-black">{value}</h2>
         </div>
-        <button className="text-gray-400 hover:text-gray-600">
+        <button className="text-gray-400 hover:text-gray-600" aria-label="More">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
             <circle cx="10" cy="4" r="1.5" />
             <circle cx="10" cy="10" r="1.5" />
@@ -37,6 +41,8 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
           </svg>
         </button>
       </div>
+
+      {/* Trend indicator */}
       <div className="flex items-center">
         <div className="flex items-center gap-1 font-bold text-[12px] sm:text-sm ">
           {trend?.trendType === "up" ? (
@@ -44,6 +50,7 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
           ) : trend?.trendType === "down" ? (
             <FaArrowTrendDown className="text-red-500 animate-pulse-down" />
           ) : (
+            // Neutral placeholder when trendType is missing
             <FaArrowTrendUp className="text-gray-400" />
           )}
           <p
@@ -54,6 +61,7 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
                 ? "text-red-500"
                 : "text-gray-400"
             } `}>
+            {/* Animated percentage counter */}
             <CountUp
               end={Number(String(trend?.value).replace(/[^0-9.-]/g, ""))}
               decimals={2}
@@ -64,11 +72,13 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
         </div>
       </div>
 
+      {/* Tiny area sparkline */}
       <div className="h-8 -mx-2 mt-2">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartData}
             margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+            {/* Gradient definition driven by computed stroke color */}
             <defs>
               <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
                 <stop
@@ -83,6 +93,8 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
                 />
               </linearGradient>
             </defs>
+
+            {/* Smooth area line with gradient fill */}
             <Area
               type="monotone"
               dataKey="value"
@@ -102,6 +114,3 @@ const StatsWidget: React.FC<StatsWidgetT> = ({
 };
 
 export default StatsWidget;
-{
-  /* Percentage Change */
-}

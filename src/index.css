@@ -9,34 +9,13 @@ body {
   --color-surface: #ffffff; /* cards */
   --color-border: #b9bcc4; /* neutral borders */
   --color-border-soft: #eeacac; /* subtle pink separators */
-  --color-hover-pink: #fee1e1;
-  --color-icon-bg: #475569;
-  --color-links-acitve: #f05454;
-  --color-wedget-title: #dbd5d8;
-
-  /* Text */
-  --color-text: #1b1d22; /* primary text */
-  --color-text-muted: #686667; /* secondary text */
-
-  /* Brand / Accents (charts, badges, highlights) */
-  --color-primary-500: #ed6d6c; /* salmon/pink line & accents */
-  --color-primary-300: #eeacac; /* lighter pink */
-
-  --color-success-500: #6fd292; /* green growth arrow/mini chart */
-  --color-success-300: #98d7ad; /* lighter green */
-
-  --color-info-500: #2d589a; /* blue icons/links */
-  --color-info-300: #7488aa; /* lighter blue */
-
-  --color-warning-500: #f49b2e; /* orange warning/accent */
-  --color-danger-500: #f2170e; /* red status */
-
-  /* Neutral scale (optional helpers) */
-  --color-gray-900: #1b1d22;
-  --color-gray-600: #686667;
-  --color-gray-400: #a09fa0;
-  --color-gray-300: #b9bcc4;
+  --color-hover-pink: #fee1e1; /* hover on links */
+  --color-icon-bg: #475569; /* for icons bg*/
+  --color-links-acitve: #f05454; /* when links active */
+  --color-wedget-title: #dbd5d8; /* for widget titles*/
 }
+
+/* pulse animation */
 @layer utilities {
   @keyframes pulse-up {
     0%,

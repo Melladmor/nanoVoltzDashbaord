@@ -11,22 +11,26 @@ const Header = () => {
   const { pathname } = useLocation();
   const MainPath = pathname.split("/")[1] || "";
   const links = routes?.find((el: RoutesI) => el?.path === MainPath);
+
+  // Local UI state: mobile menu + mobile search
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  // Toggle hamburger drawer
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Toggle mobile search overlay
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
 
   return (
-    <nav className="flex flex-col w-full sticky top-0 z-30 bg-bg shadow-[0_2px_2px_-3px_rgba(0,0,0,0.2)] relative">
-      {/* Main Header */}
+    <nav className="flex flex-col w-full sticky top-0 z-30 bg-bg shadow-[0_2px_2px_-3px_rgba(0,0,0,0.2)]">
+      {/* Top bar */}
       <div className="flex flex-row w-full px-3 lg:px-6 items-center justify-between py-5">
-        {/* Navigation Links - Desktop */}
+        {/* Desktop: primary nav links with active underline */}
         <div className="hidden lg:flex items-center gap-8">
           {links?.children?.map((el: RoutesElementsI) => {
             const isActive = pathname === el?.path;
@@ -38,6 +42,7 @@ const Header = () => {
                     isActive ? "text-links-acitve" : "text-black"
                   } font-medium relative hover:text-links-acitve`}>
                   {el?.title}
+                  {/* Animated underline: full width if active, expand on hover */}
                   <span
                     className={`absolute left-0 -bottom-[18px] h-1 rounded-tr-full rounded-tl-full bg-links-acitve transition-all duration-300 ${
                       isActive ? "w-full" : "w-0 group-hover:w-full"
@@ -49,11 +54,12 @@ const Header = () => {
           })}
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile: hamburger button */}
         <div className="lg:hidden">
           <button
             onClick={toggleMobileMenu}
-            className="p-2 text-black hover:text-links-acitve">
+            className="p-2 text-black hover:text-links-acitve"
+            aria-label="Toggle navigation menu">
             {isMobileMenuOpen ? (
               <HiX className="text-2xl" />
             ) : (
@@ -62,9 +68,9 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Right Side Actions */}
+        {/* Right side: search + avatar */}
         <div className="flex flex-row items-center gap-3">
-          {/* Search - Desktop */}
+          {/* Desktop search input */}
           <div className="hidden md:block">
             <div className="h-full py-3 px-6 w-[250px] lg:w-[300px] bg-white rounded-full flex flex-row items-center gap-4">
               <IoIosSearch className="text-icon-bg text-2xl font-bold" />
@@ -72,19 +78,22 @@ const Header = () => {
                 type="text"
                 placeholder="Search pools or tokens"
                 className="h-full w-full border-none outline-none text-sm"
+                // onChange={...} // wire up later
               />
             </div>
           </div>
 
-          {/* Expandable Search - Mobile */}
+          {/* Mobile search: icon -> full-width overlay */}
           <div className="md:hidden relative">
             {!isSearchOpen ? (
               <button
                 onClick={toggleSearch}
-                className="p-2 text-icon-bg hover:text-links-acitve transition-all duration-200">
+                className="p-2 text-icon-bg hover:text-links-acitve transition-all duration-200"
+                aria-label="Open search">
                 <IoIosSearch className="text-2xl" />
               </button>
             ) : (
+              // Search drawer overlay
               <div className="fixed top-0 left-0 right-0 bg-white z-60 px-3 py-5 shadow-lg">
                 <div className="flex items-center gap-3">
                   <div className="flex-1 py-3 px-4 bg-gray-100 rounded-full flex items-center gap-3">
@@ -98,7 +107,8 @@ const Header = () => {
                   </div>
                   <button
                     onClick={toggleSearch}
-                    className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-all duration-200">
+                    className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-all duration-200"
+                    aria-label="Close search">
                     <HiX className="text-xl" />
                   </button>
                 </div>
@@ -106,36 +116,41 @@ const Header = () => {
             )}
           </div>
 
-          {/* User Avatar */}
+          {/* User avatar + caret (placeholder menu trigger) */}
           <div className="flex items-center gap-2 lg:gap-3">
             <img
               src={avatar}
+              alt="User avatar"
               className="size-[35px] md:size-[45px] rounded-full"
             />
-            <div className="h-6 w-6 md:h-7 md:w-7 rounded-full flex items-center justify-center bg-hover-pink">
+            <div
+              className="h-6 w-6 md:h-7 md:w-7 rounded-full flex items-center justify-center bg-hover-pink"
+              // onClick={...} // attach profile menu later
+            >
               <FaCaretDown className="text-icon-bg text-sm md:text-base" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Search Bar - Removed since we use expandable now */}
-
-      {/* Mobile Navigation Menu - Overlay */}
+      {/* Mobile slide-in menu (right drawer) */}
       <div
         className={`lg:hidden fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}>
-        {/* Drawer Header */}
+        }`}
+        role="dialog"
+        aria-modal="true">
+        {/* Drawer header with close button */}
         <div className="flex items-center justify-end p-4 border-b border-gray-200">
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100">
+            className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
+            aria-label="Close menu">
             <HiX className="text-xl" />
           </button>
         </div>
 
-        {/* Navigation Links */}
+        {/* Drawer nav links */}
         <div className="flex flex-col py-4 px-4 space-y-1">
           {links?.children?.map((el: RoutesElementsI) => {
             const isActive = pathname === el?.path;
@@ -143,7 +158,7 @@ const Header = () => {
               <NavLink
                 key={el?.path}
                 to={el?.path}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => setIsMobileMenuOpen(false)} // close after navigation
                 className={`${
                   isActive
                     ? "text-links-acitve bg-blue-50 border-r-4 border-links-acitve"
@@ -155,10 +170,14 @@ const Header = () => {
           })}
         </div>
 
-        {/* User Section in Drawer */}
+        {/* Drawer footer: mini profile block */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
           <div className="flex items-center gap-3">
-            <img src={avatar} className="size-10 rounded-full" />
+            <img
+              src={avatar}
+              alt="User avatar"
+              className="size-10 rounded-full"
+            />
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-800">المستخدم</p>
               <p className="text-xs text-gray-500">user@example.com</p>
