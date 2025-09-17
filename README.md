@@ -56,7 +56,7 @@ The app will run by default on: [http://localhost:5173](http://localhost:5173)
 
 ## Demo
 
-<a href="https://smartcube-task.netlify.app/" target="_blank">Demo</a>
+<a href="https://nanovoltz-dashboard.netlify.app/" target="_blank">Demo</a>
 
 ---
 
@@ -66,5 +66,3 @@ The app will run by default on: [http://localhost:5173](http://localhost:5173)
 - <a href="https://melladmorshed.netlify.app/" target="_blank">Portfolio</a>
 
 ---
-
-
