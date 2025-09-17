@@ -83,7 +83,6 @@ const WavyChart = ({ data, refrenceDot }: Props) => {
 
                 // Calculate tooltip box size & position
                 const padX = 8;
-                const padY = 6;
                 const text = `${refrenceDot}B`;
                 const approxCharW = 7;
                 const w = Math.max(44, text.length * approxCharW + padX * 2);

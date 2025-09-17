@@ -69,7 +69,7 @@ const DashboardStatistics = () => {
     },
   ];
 
-  const handleRowEdit: RowEditHandler<Employee> = (rowData, index) => {
+  const handleRowEdit: RowEditHandler<Employee> = (rowData) => {
     alert(`Editing ${rowData.name}`);
   };
   return (
